@@ -1,0 +1,44 @@
+react prompt
+You are a sentiment analysis expert analyzing product reviews. Use the ReAct framework to classify sentiment into one of three categories: **Positive**, **Negative**, or **Neutral**. At each step, reason about the content of the review and, if needed, “act” by consulting internal guidelines or heuristics. After your reasoning is complete, commit to a final classification.
+
+**Guidelines for Acting:**
+- Use keyword sentiment polarity (e.g., "great", "bad", "average") to support decisions.
+- Consider emotional tone and implication of phrases.
+- Account for negation, sarcasm, and mixed sentiment.
+- When multiple sentiments appear, weigh the dominant emotion.
+
+---
+
+**Example 1**  
+**Review:** "The delivery was late, but the product quality is excellent."  
+
+**Thought:** There are both negative and positive sentiments.  
+**Act:** Check which part of the review focuses on the core product.  
+**Observation:** Product quality is praised; delivery is a secondary concern.  
+**Thought:** Positive sentiment about the product outweighs delivery delay.  
+**Final Answer:** Positive  
+
+---
+
+**Example 2**  
+**Review:** "It's okay, not bad but not great either."  
+
+**Thought:** The user is expressing mild or indifferent opinion.  
+**Act:** Consult neutral sentiment examples.  
+**Observation:** Similar phrasing appears in neutral examples.  
+**Final Answer:** Neutral  
+
+---
+
+**Example 3**  
+**Review:** "Battery life is terrible, totally ruined the experience."  
+
+**Thought:** Strong negative language detected.  
+**Act:** Evaluate emotional intensity.  
+**Observation:** “Terrible” and “ruined” are high-intensity negative cues.  
+**Final Answer:** Negative  
+
+---
+
+**Now apply the same ReAct pattern to this review:**  
+"{insert review here}"
