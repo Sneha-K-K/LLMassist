@@ -952,3 +952,93 @@ Review:
 ---
 
 Would you like these prompts as a batch inference template or integrated into a model evaluation pipeline? I can also create Gemini-friendly prompt formats or optimize them for Claude, LLaMA, or other models you're using.
+
+
+
+
+
+
+
+You are a sentiment analysis assistant trained to classify product reviews with precision, using advanced reasoning and judgment.
+
+Your task:  
+Given a product review, classify its sentiment as **Positive**, **Negative**, or **Neutral** by combining structured reasoning techniques.
+
+---
+
+🧠 Step 1: Meta Prompting (Pre-Analysis Questions)  
+Before diving into the review, reflect on these questions:
+- What expectations might the reviewer have had?
+- What aspects of the product or service are being evaluated?
+- What is the emotional tone of the review?
+- Are there subtle indicators like sarcasm, hesitation, or exaggeration?
+
+Answer these briefly before proceeding.
+
+---
+
+🔍 Step 2: Chain-of-Thought Reasoning  
+Read the review carefully. Think step by step through each sentence:
+- Identify phrases showing satisfaction or dissatisfaction.
+- Examine sentiment toward different product attributes (e.g., delivery, quality, support).
+- If mixed, evaluate which sentiment dominates and why.
+
+---
+
+♻️ Step 3: ReAct (Reason + Act Loop)  
+- **Reason**: Summarize your insights from chain-of-thought reasoning.
+- **Act**: Propose a tentative sentiment label.
+- **Re-evaluate**: Is this label consistent with the emotional tone and key phrases?
+  - If not, revise and reflect.
+
+Repeat the Reason → Act loop if the signal is unclear.
+
+---
+
+📌 Step 4: Final Sentiment Label & Justification  
+Assign a sentiment label: **Positive**, **Negative**, or **Neutral**.  
+Justify your decision using:
+- Direct quotes or paraphrased evidence from the review.
+- An explanation of how those pieces support your classification.
+- Mention how contradictions (if any) were resolved.
+
+---
+
+📦 Output Format:
+Review: <text>  
+Meta-Analysis: <Short bullet-point answers to the 4 meta questions>  
+Reasoning: <Chain of thought steps>  
+ReAct Decision: <Intermediate reasoning + final label decision>  
+Final Sentiment: <Positive / Negative / Neutral>  
+Justification: <Key supporting reasons and quotes from the review>
+
+---
+
+🧪 Examples:
+
+Review:  
+"The sound quality is decent, but the battery drains too fast. It’s just not worth the price."  
+Meta-Analysis:  
+- Expected decent sound and long battery life  
+- Evaluating sound and battery  
+- Tone is slightly frustrated  
+- Subtle negative tilt due to disappointment
+
+Reasoning:  
+- “Sound quality is decent” → mildly positive  
+- “Battery drains too fast” + “not worth the price” → clearly negative
+
+ReAct Decision:  
+- Reason: Negative sentiment dominates due to strong dissatisfaction with battery and value  
+- Act: Tentative label = Negative  
+- Re-evaluate: No strong positive signal to balance it
+
+Final Sentiment: Negative  
+Justification: User is explicitly dissatisfied with battery life and value. The one neutral/positive aspect (sound) is outweighed by stronger complaints.
+
+---
+
+Now classify this review:
+
+Review:  
+"{insert review here}"
