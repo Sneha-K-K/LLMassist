@@ -1042,3 +1042,161 @@ Now classify this review:
 
 Review:  
 "{insert review here}"
+
+
+You are a reasoning-intensive sentiment analysis agent trained to classify nuanced product reviews. Your task is to determine if a given review expresses a **Positive**, **Negative**, or **Neutral** sentiment using a structured combination of Chain-of-Thought reasoning and ReAct (Reasoning and Acting in loops).
+
+Each review may contain mixed, ambiguous, or indirect language. Your classification must be based not on surface-level keywords but on **deliberate, logical reasoning** that considers the reviewer’s emotional tone, intent, and context.
+
+---
+
+### STEP 1: CHAIN OF THOUGHT REASONING
+Break the review down sentence by sentence or clause by clause:
+- What sentiment does each part of the review express?
+- Are there words of praise, disappointment, confusion, or neutrality?
+- Consider tone, punctuation, and intensifiers (“really”, “barely”, “absolutely”, etc.).
+- Identify the main product aspects being discussed (e.g., delivery, quality, service, price).
+
+Record this analysis as a step-by-step thought process.
+
+---
+
+### STEP 2: ReAct LOOP (Reason → Act → Reflect)
+Iteratively decide sentiment using internal deliberation.
+
+**1. Reason:**  
+Summarize the dominant emotional cues and judgments from the reasoning above.
+
+**2. Act:**  
+Propose a **tentative sentiment label** based on current understanding.
+
+**3. Reflect:**  
+Ask:
+- Does this label align with the emotional weight of the entire review?
+- Are there contradictions or hedged language?
+- Does a single extreme opinion outweigh several milder ones?
+
+**If your reflection reveals inconsistency**, revise the label and repeat.
+
+---
+
+### STEP 3: FINAL SENTIMENT & JUSTIFICATION
+Provide the final sentiment (Positive, Negative, or Neutral) and justify your label using:
+- Quoted phrases from the review
+- Key emotional cues
+- Resolution of any ambiguity
+
+---
+
+### OUTPUT FORMAT
+
+Review: "<insert review text here>"
+
+Chain-of-Thought Reasoning:  
+...
+
+ReAct Loop:
+- Reason: ...
+- Act (Tentative Label): ...
+- Reflect & Revise: ...
+- Final Decision: ...
+
+Final Sentiment: <Positive / Negative / Neutral>
+
+Justification: ...
+
+You are a multi-step sentiment classification agent. For each review, use Chain-of-Thought reasoning and the ReAct loop to classify it as Positive, Negative, or Neutral. Follow the detailed format and use these four examples as templates.
+
+---
+
+### EXAMPLE 1
+
+Review: "The screen is bright and clear, but the touch sensitivity is awful. It lags constantly."
+
+Chain-of-Thought Reasoning:
+- “The screen is bright and clear” → positive
+- “Touch sensitivity is awful” → strong negative
+- “Lags constantly” → negative performance complaint
+- Mixed review, but the critical issue affects usability
+
+ReAct Loop:
+- Reason: Negative aspects are central to usage. Positive comment is limited to screen.
+- Act (Tentative Label): Neutral
+- Reflect: Wait — touch and lag issues are major, and reviewer sounds frustrated.
+- Revise: Label should be Negative.
+
+Final Sentiment: Negative
+
+Justification: Despite one praise point, serious functionality problems dominate tone and content. The word “awful” and “lags constantly” signal strong dissatisfaction.
+
+---
+
+### EXAMPLE 2
+
+Review: "This product does exactly what it promises. I’m impressed by the quality and speed."
+
+Chain-of-Thought Reasoning:
+- “Does exactly what it promises” → positive
+- “Impressed” → strong satisfaction
+- “Quality and speed” praised explicitly
+
+ReAct Loop:
+- Reason: Clear, enthusiastic praise with no caveats
+- Act (Tentative Label): Positive
+- Reflect: No contradictory phrases or hesitations
+- Revise: No change
+
+Final Sentiment: Positive
+
+Justification: Multiple strong expressions of satisfaction with product’s performance and value.
+
+---
+
+### EXAMPLE 3
+
+Review: "It arrived on time. Haven’t really used it yet, but looks fine so far."
+
+Chain-of-Thought Reasoning:
+- “Arrived on time” → neutral/logistical
+- “Haven’t really used it yet” → uncertain sentiment
+- “Looks fine so far” → weakly positive but cautious
+
+ReAct Loop:
+- Reason: Reviewer hasn’t formed a full opinion
+- Act (Tentative Label): Neutral
+- Reflect: Positive language is not strong enough to imply satisfaction
+- Revise: Neutral is appropriate
+
+Final Sentiment: Neutral
+
+Justification: Review contains no emotional judgment or real usage data. Sentiment remains tentative and cautious.
+
+---
+
+### EXAMPLE 4
+
+Review: "Battery lasts for days! The build feels solid and premium. Best purchase this year."
+
+Chain-of-Thought Reasoning:
+- “Battery lasts for days” → strongly positive
+- “Solid and premium” → high praise for quality
+- “Best purchase this year” → intense positive sentiment
+
+ReAct Loop:
+- Reason: All points signal high satisfaction. No negatives or hesitations.
+- Act (Tentative Label): Positive
+- Reflect: Nothing to revise.
+
+Final Sentiment: Positive
+
+Justification: The reviewer uses superlatives and reinforces satisfaction with durability and battery life.
+
+---
+
+### INSTRUCTION
+
+Now classify this new review using the same format:
+
+Review: "<INSERT REVIEW TEXT HERE>"
+
+[Follow full Chain-of-Thought and ReAct loop reasoning]
