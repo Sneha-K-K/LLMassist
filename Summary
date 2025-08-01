@@ -1,0 +1,617 @@
+Thanks! From the image, here’s the task definition you need to follow:
+
+
+---
+
+📌 Task 3: Overall Sentiment Summary from Reviews
+
+Objective: Generate a comparative summary (up to 150 words) outlining the common reasons for high satisfaction and dissatisfaction across product reviews.
+
+Evaluation Criteria:
+
+1. Relevance & Accuracy
+
+
+2. Completeness
+
+
+3. Conciseness
+
+
+4. Readability
+
+
+5. Synthesis & Comparativeness
+
+
+
+
+---
+
+Now, here are 7 highly detailed prompts, each using a different prompting technique (or a combination) to guide an LLM to generate such summaries correctly and with high quality.
+
+
+---
+
+🧠 1. Chain of Thought Prompt
+
+You are analyzing customer reviews for a product. Your goal is to write a 150-word summary explaining the most common reasons customers were highly satisfied or dissatisfied.
+
+Start by identifying themes from the reviews:
+- What product features are praised? Why?
+- What complaints are repeated?
+- Are there patterns in delivery, customer service, product quality, price, etc.?
+
+Use logical step-by-step reasoning to extract and group these insights. Then, synthesize them into a clear, concise summary that reflects the overall sentiment balance (positive vs negative).
+
+Ensure:
+- All claims are directly supported by phrases or patterns in the reviews
+- The final summary includes both positive and negative insights
+- Summary is under 150 words
+
+Output format:
+
+Common Satisfaction Drivers:
+
+...
+
+...
+
+
+Common Dissatisfaction Drivers:
+
+...
+
+...
+
+
+
+
+
+---
+
+🔁 2. ReAct (Reasoning + Action) Prompt
+
+You are a product review analyst. Your task is to create a summary (under 150 words) that explains why customers were happy or unhappy with a product.
+
+Use a ReAct (Reasoning + Action) process:
+- First, read all the reviews.
+- Reason: What recurring opinions or experiences do you notice?
+- Act: Start listing key points, grouping similar reasons for satisfaction and dissatisfaction.
+- Reflect: Have you covered both positive and negative themes fairly?
+- Revise: Adjust if one side dominates unfairly or you missed something.
+
+Then, convert your notes into a single comparative summary covering:
+- What most customers liked
+- What most customers disliked
+
+Keep the tone neutral and focus on clear patterns. Do not include rare or isolated opinions.
+
+
+---
+
+🧬 3. Tree of Thought Prompt
+
+You will analyze a set of product reviews to create a summary of up to 150 words highlighting the main reasons for customer satisfaction and dissatisfaction.
+
+Use a Tree of Thought process:
+1. Break down the task into subtasks:
+   - Identify common positive comments
+   - Identify common negative comments
+   - Rank their frequency and importance
+2. For each branch, explore possible interpretations (e.g., is “good battery life” really about convenience?)
+3. Prune irrelevant or rare outliers
+
+Use the branches with the strongest support across reviews to write a concise, readable summary.
+
+Final summary must:
+- Include multiple key themes for both satisfaction and dissatisfaction
+- Use synthesis (combine similar points)
+- Be concise and under 150 words
+
+
+---
+
+🤖 4. Meta Prompting (You’re an Expert...)
+
+You are an expert product insights analyst for a consumer research company.
+
+Your job is to write a comparative sentiment summary under 150 words for a product, based on a collection of user reviews. The summary must present the most common reasons customers were satisfied or dissatisfied.
+
+Instructions:
+- Do not copy individual reviews
+- Identify repeating themes and patterns
+- Avoid one-off or rare complaints/praises
+- Use formal, precise, and neutral tone
+- Present both sides (positive and negative)
+
+The summary will be judged on relevance, completeness, synthesis, and clarity. Assume the audience is a product team looking for actionable feedback.
+
+
+---
+
+🧭 5. Self-Consistency Prompting
+
+Generate three different summary drafts of up to 150 words each that explain the common reasons for satisfaction and dissatisfaction from product reviews.
+
+Then, compare the summaries and identify the most consistently mentioned themes across all versions.
+
+Write a final summary that reflects only the most reliably recurring insights.
+
+Ensure:
+- Summary is concise but complete
+- Includes both positive and negative points
+- No rare, speculative, or emotional exaggeration
+
+
+---
+
+🧠 6. Label Justification + Summary Prompt
+
+Given multiple product reviews, label each sentence as showing satisfaction (positive), dissatisfaction (negative), or neutral.
+
+Then:
+- Count and cluster the most frequently mentioned positive and negative themes
+- Write a 150-word summary that highlights these clusters
+- Justify why each point is included by citing how often it was referenced
+
+Make sure the summary is concise, clear, and comparative (shows both good and bad aspects).
+
+
+---
+
+🔁 7. Iterative Refinement Prompt
+
+First, write a draft summary (under 150 words) explaining common reasons for satisfaction and dissatisfaction in product reviews.
+
+Then:
+1. Refine for completeness – did you include all key points?
+2. Refine for conciseness – remove repetition or vague language
+3. Refine for comparativeness – are both sides represented?
+4. Refine for clarity – improve readability and structure
+
+Only return the final, refined version. Ensure it balances emotional and functional themes.
+
+
+---
+
+Would you like me to:
+
+Generate actual summaries for a dataset using these prompts?
+
+Convert these to Gemini system message + user message format?
+
+Optimize them for few-shot prompting?
+
+
+Let me know and I’ll take it further!
+
+
+
+
+
+
+Thanks! Here's a set of rewritten and augmented prompts—tailored for multiple products, each needing a summary of reasons for high satisfaction and dissatisfaction. These prompts align with the evaluation criteria shown in your image (relevance, accuracy, completeness, conciseness, readability, synthesis, and comparativeness). Each uses a specific prompting technique or a combination of techniques and includes examples to guide the model.
+
+
+---
+
+🔗 1. Chain of Thought Prompt (Multi-product Aware)
+
+Prompt:
+
+You are analyzing customer reviews for multiple products. For each product, carefully identify the most common reasons that customers express satisfaction or dissatisfaction. Think step-by-step:
+
+1. Group the reviews by product.
+
+
+2. For each product, extract specific repeated themes or patterns related to likes and dislikes.
+
+
+3. Categorize them as "Reasons for Satisfaction" or "Reasons for Dissatisfaction."
+
+
+4. Generate a concise summary (max 150 words) for each product separately.
+Avoid general opinions; focus on actionable insights mentioned by multiple reviewers.
+
+
+
+Example Input:
+
+Product A Reviews:
+
+“Battery lasts all day. Super light to carry.”
+
+“Battery is decent, but speaker volume is too low.”
+
+“Excellent battery and weight, but poor audio.”
+
+
+Product B Reviews:
+
+“The screen is sharp, and sound quality is excellent.”
+
+“Feels sluggish. Good screen but slow interface.”
+
+“High-quality display, but takes too long to boot.”
+
+
+Expected Output:
+
+Product A Summary
+Reasons for Satisfaction: Long battery life, lightweight design.
+Reasons for Dissatisfaction: Low speaker volume, poor audio quality.
+
+Product B Summary
+Reasons for Satisfaction: Sharp, high-quality display, good audio.
+Reasons for Dissatisfaction: Sluggish performance, slow boot times.
+
+
+---
+
+🔁 2. ReAct Prompt (Reasoning + Action Loop)
+
+Prompt:
+
+You are an AI review analyst. Your goal is to write a comparative summary of reasons for customer satisfaction and dissatisfaction, per product. First, reason through what aspects customers mention most often. Then take action to summarize. Think like this:
+
+1. Reason → What patterns or aspects repeat across multiple reviews?
+
+
+2. Action → Group insights into satisfaction/dissatisfaction.
+
+
+3. Output → Write a summary of max 150 words per product.
+
+
+
+Think and act example:
+Input Reviews for Product C:
+
+“Camera quality is amazing.”
+
+“Love the sharp images.”
+
+“Poor night-time shots.”
+
+“Battery drains too fast.”
+
+
+Reasoning:
+
+Positive: Camera, image sharpness.
+
+Negative: Night photography, battery.
+
+
+Action Output for Product C:
+Reasons for Satisfaction: Excellent image quality, sharp pictures.
+Reasons for Dissatisfaction: Weak night photography, fast battery drain.
+
+Repeat the above for every product.
+
+
+---
+
+🧠 3. Meta-Prompting (Model as Reflective Evaluator)
+
+Prompt:
+
+Your task is to evaluate product reviews as if you were a judge assessing what makes users satisfied or dissatisfied. You must think like a summarization expert and critique your own summary to ensure:
+
+You’ve captured only repeated opinions
+
+You’ve avoided singular outliers
+
+You’ve written clearly and concisely for each product
+
+
+Now follow these steps:
+
+1. Write your summary per product.
+
+
+2. Evaluate your own output for coverage and clarity.
+
+
+3. Edit your answer if needed to meet the criteria: relevance, completeness, conciseness, and synthesis.
+
+
+
+Example:
+Product D Reviews:
+
+“Setup was fast.”
+
+“Setup is tricky without the manual.”
+
+“Good for pros, not for beginners.”
+
+
+Your Summary (before critique):
+Fast setup, though beginners may find it difficult.
+
+Your critique:
+Mention of difficulty isn't about setup speed but complexity. Clarify the summary.
+
+Final Summary:
+Reasons for Satisfaction: Quick setup for experienced users.
+Reasons for Dissatisfaction: Confusing setup process for beginners.
+
+
+---
+
+🌳 4. Tree of Thoughts Prompt
+
+Prompt:
+
+Generate satisfaction and dissatisfaction summaries for multiple products using Tree of Thought reasoning. For each product:
+
+First branch: Cluster all positive opinions → extract themes
+
+Second branch: Cluster all complaints → extract themes
+
+Third branch: Synthesize into clean satisfaction/dissatisfaction summary
+Only mention reasons that appear across multiple reviews.
+
+
+Example:
+
+Product E Positive Branch:
+
+“Great price.”
+
+“Affordable.”
+
+“Worth the cost.”
+→ Theme: Price affordability
+
+
+Product E Negative Branch:
+
+“Scratches easily.”
+
+“Material feels cheap.”
+→ Theme: Poor build quality
+
+
+Final Output:
+
+Product E Summary:
+Reasons for Satisfaction: Affordable, good value for money.
+Reasons for Dissatisfaction: Fragile build, prone to scratches.
+
+
+---
+
+💬 5. Label Justification Prompt
+
+Prompt:
+
+You must summarize reviews for each product by justifying why customers are satisfied or dissatisfied. Each product summary should have two bullet lists with reasons, and each reason must be backed by a brief justification from the review content.
+
+Example for Product F:
+
+Reasons for Satisfaction:
+
+Lightweight: “It fits perfectly into my bag without adding weight.”
+
+Easy UI: “The interface is intuitive even for first-time users.”
+
+
+Reasons for Dissatisfaction:
+
+No Bluetooth: “Disappointed that it doesn’t support wireless audio.”
+
+Fragile buttons: “Buttons stopped working after a few weeks.”
+
+
+
+---
+
+🌀 6. Self-Consistency Prompt
+
+Prompt:
+
+Generate 3 different summaries for each product and then consolidate into a final one that is the most balanced and complete. Make sure each of the 3 drafts brings different angles and then combine them.
+
+Example (Summarized):
+
+Product G:
+
+Draft 1: Emphasizes build quality.
+
+Draft 2: Focuses on performance and user experience.
+
+Draft 3: Mixes durability and setup process.
+
+
+Final Answer: Reasons for Satisfaction: Durable body, smooth performance.
+Reasons for Dissatisfaction: Setup is time-consuming, minor UI bugs.
+
+
+---
+
+Would you like me to generate the "ultra ultimate prompt" version for this comparative summarization task now, complete with 10+ full examples and multi-technique layering (e.g., CoT + ReAct + Meta + Label Justification)?
+
+
+
+
+
+
+
+
+Prompt Title: Ultra-Detailed Few-Shot Prompt for Summarizing Multi-Product Review Sentiment
+
+Objective: Given a set of customer reviews for multiple products, generate a structured summary for each product that clearly outlines:
+
+Common reasons for satisfaction (positive sentiment)
+
+Common reasons for dissatisfaction (negative sentiment)
+
+
+Ensure summaries are accurate, concise, complete, and clearly distinguish between satisfaction and dissatisfaction per product.
+
+
+---
+
+Instructions: You are an expert reviewer assistant. Your task is to read through reviews for multiple products and write a comparative sentiment summary per product. For each product, write two clear lists:
+
+Top reasons for customer satisfaction (positive points)
+
+Top reasons for customer dissatisfaction (negative points)
+
+
+Follow these steps using advanced reasoning techniques:
+
+
+---
+
+CHAIN OF THOUGHT + REACT + LABEL JUSTIFICATION + META PROMPTING COMBINED:
+
+Step-by-Step Thought Process:
+
+1. Identify the product being reviewed.
+
+
+2. Parse the customer sentiment expressed in each review.
+
+
+3. Categorize each reason into either a satisfaction or dissatisfaction bucket.
+
+
+4. Look for patterns across reviews to detect common themes.
+
+
+5. Summarize only the most frequently mentioned and significant satisfaction and dissatisfaction reasons.
+
+
+6. Justify each point briefly ("Customers appreciated... because...", "Customers disliked... due to...").
+
+
+7. Use clean, bullet-point format.
+
+
+
+
+---
+
+Meta Prompt Self-Check Criteria:
+
+Have I clearly separated reasons for satisfaction and dissatisfaction per product?
+
+Are all points based on actual review content?
+
+Did I remove vague, generic, or duplicate items?
+
+Is the summary concise yet complete?
+
+Did I justify the sentiment label for each point?
+
+Are the items grouped meaningfully?
+
+
+
+---
+
+EXAMPLE 1
+
+Product: Bluetooth Wireless Earbuds X100
+
+Summary:
+
+Satisfaction:
+
+Long battery life (Customers noted they could use it for a full day without charging)
+
+Comfortable fit (Many reviews mention the earbuds stay secure even during workouts)
+
+Clear audio and bass (Several users said the sound quality exceeded expectations for the price)
+
+
+Dissatisfaction:
+
+Weak microphone quality (Users reported muffled voice output during calls)
+
+Connectivity issues in crowded areas (Frequent disconnections when used outdoors)
+
+Slow customer support (Complaints about delayed responses from support team)
+
+
+
+---
+
+EXAMPLE 2
+
+Product: Stainless Steel Vacuum Flask - 1L
+
+Summary:
+
+Satisfaction:
+
+Excellent insulation (Customers reported drinks stayed hot for over 12 hours)
+
+Leakproof design (Praised for being safe to carry in bags with no leakage)
+
+Durable build (Many users said the flask survived multiple drops without damage)
+
+
+Dissatisfaction:
+
+Bulky size (Some found it too large for travel mugs or bike holders)
+
+Paint chipping over time (Reported in several long-term usage reviews)
+
+
+
+---
+
+EXAMPLE 3
+
+Product: Organic Green Tea Bags - Pack of 100
+
+Summary:
+
+Satisfaction:
+
+Pleasant aroma and mild taste (Widely appreciated for being less bitter than others)
+
+Eco-friendly packaging (Customers liked the use of compostable materials)
+
+Great value for money (Multiple mentions of the low price for the quantity)
+
+
+Dissatisfaction:
+
+Weak flavor for strong tea drinkers (Some found it too mild)
+
+Occasional broken tea bags (Few reviews mentioned torn packaging inside box)
+
+
+
+---
+
+System Instructions (Optional for API or advanced interface): You are a precise, thoughtful assistant trained to perform product sentiment summarization. Always follow the multi-step reasoning approach, justify conclusions, eliminate noise, and only report what appears as genuine trends across customer feedback.
+
+
+---
+
+Output Format:
+
+Product: [Product Name]
+
+Satisfaction:
+- [Reason 1] (justification)
+- [Reason 2] (justification)
+...
+
+Dissatisfaction:
+- [Reason 1] (justification)
+- [Reason 2] (justification)
+...
+
+
+---
+
+Begin your task now.
+
