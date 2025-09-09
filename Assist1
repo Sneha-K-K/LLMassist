@@ -1,0 +1,44 @@
+import matplotlib.pyplot as plt
+
+# Example counts (replace with your actuals)
+total_docs = 3119
+tcoo_above = 868
+coe_above = 920
+
+# Calculate added/removed
+added = max(coe_above - tcoo_above, 0)
+removed = max(tcoo_above - coe_above, 0)
+
+# Waterfall steps
+labels = ["Above Threshold (TCOO)", "Added", "Removed", "Above Threshold (COE)"]
+values = [tcoo_above, added, -removed, coe_above]
+
+# Compute cumulative positions for the "flow"
+cumulative = [0]  # starting point
+for i in range(len(values)-1):
+    cumulative.append(cumulative[-1] + values[i])
+
+# Colors: positive (green), negative (red), totals (blue/gray)
+colors = []
+for v, lbl in zip(values, labels):
+    if lbl.startswith("Above Threshold"):
+        colors.append("steelblue")
+    elif v >= 0:
+        colors.append("seagreen")
+    else:
+        colors.append("indianred")
+
+# Plot
+fig, ax = plt.subplots(figsize=(8,5))
+
+for i, (val, base, lbl, color) in enumerate(zip(values, cumulative, labels, colors)):
+    ax.bar(i, val, bottom=base, color=color, edgecolor="black")
+    ax.text(i, base + val/2, str(val), ha="center", va="center", color="white", fontsize=10, fontweight="bold")
+
+ax.set_xticks(range(len(labels)))
+ax.set_xticklabels(labels, rotation=20, ha="right")
+ax.set_title("Waterfall of Docs Above Threshold (TCOO → COE)")
+ax.set_ylabel("Number of Documents")
+
+plt.tight_layout()
+plt.show()
