@@ -42,3 +42,44 @@ ax.set_ylabel("Number of Documents")
 
 plt.tight_layout()
 plt.show()
+
+
+import matplotlib.pyplot as plt
+
+# Example numbers (replace with your real ones)
+tcoo_above = 868
+coe_above = 920
+intersection = 766
+
+swap_in = tcoo_above - intersection    # above only in TCOO
+swap_out = coe_above - intersection    # above only in COE
+
+# --- Stacked Bar ---
+fig, ax = plt.subplots(figsize=(7,5))
+
+ax.bar("Coverage", intersection, label="Common (Both)", color="steelblue")
+ax.bar("Coverage", swap_in, bottom=intersection, label="Swap-in (TCOO only)", color="seagreen")
+ax.bar("Coverage", swap_out, bottom=intersection+swap_in, label="Swap-out (COE only)", color="indianred")
+
+ax.set_ylabel("Number of Documents")
+ax.set_title("Breakdown of Coverage (>0.5 threshold)")
+ax.legend()
+
+# Add annotations
+ax.text(0, intersection/2, str(intersection), ha="center", va="center", color="white", fontweight="bold")
+ax.text(0, intersection + swap_in/2, str(swap_in), ha="center", va="center", color="white", fontweight="bold")
+ax.text(0, intersection + swap_in + swap_out/2, str(swap_out), ha="center", va="center", color="white", fontweight="bold")
+
+plt.tight_layout()
+plt.show()
+
+
+# --- Pie Chart ---
+sizes = [intersection, swap_in, swap_out]
+labels = ["Common (Both)", "Swap-in (TCOO only)", "Swap-out (COE only)"]
+colors = ["steelblue", "seagreen", "indianred"]
+
+plt.figure(figsize=(6,6))
+plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=colors, wedgeprops={'edgecolor':'black'})
+plt.title("Distribution of Docs Above Threshold (TCOO vs COE)")
+plt.show()
