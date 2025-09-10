@@ -83,3 +83,79 @@ plt.figure(figsize=(6,6))
 plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=colors, wedgeprops={'edgecolor':'black'})
 plt.title("Distribution of Docs Above Threshold (TCOO vs COE)")
 plt.show()
+
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+
+# Example dataframe
+df = pd.DataFrame({
+    "doc_id": [1, 1, 1, 2, 2],
+    "section_name": ["Intro", "Intro", "Method", "Results", "Results"],
+    "text": [
+        "Section name: Intro This is part B of intro",
+        "Section name: Intro This is part A of intro",
+        "Section name: Method Some method description",
+        "Section name: Results First chunk",
+        "Section name: Results Second chunk"
+    ],
+    "section_link": [
+        "http://example.com/doc1#intro",
+        "http://example.com/doc1#intro",
+        "http://example.com/doc1#method",
+        "http://example.com/doc2#results",
+        "http://example.com/doc2#results"
+    ]
+})
+
+
+def fetch_section_text(url):
+    """Fetch full section text from webpage link"""
+    try:
+        res = requests.get(url, timeout=10)
+        res.raise_for_status()
+        soup = BeautifulSoup(res.text, "html.parser")
+        return soup.get_text(" ", strip=True)
+    except Exception as e:
+        print(f"Error fetching {url}: {e}")
+        return ""
+
+
+def merge_chunks_for_section(df):
+    merged_sections = []
+
+    # Group by doc + section
+    for (doc, section, link), group in df.groupby(["doc_id", "section_name", "section_link"]):
+        webpage_text = fetch_section_text(link)
+
+        # Find each chunk's position in webpage text
+        chunk_positions = []
+        for text in group["text"]:
+            # Remove "Section name: <section>" prefix for position check
+            cleaned = text.replace(f"Section name: {section}", "").strip()
+            pos = webpage_text.find(cleaned) if cleaned else -1
+            chunk_positions.append((pos, text))
+
+        # Sort chunks by their order of appearance in webpage text
+        chunk_positions = sorted(chunk_positions, key=lambda x: (x[0] if x[0] != -1 else 999999))
+
+        # Merge text, removing repeated "Section name: <section>" from later chunks
+        merged_text = []
+        for i, (_, chunk) in enumerate(chunk_positions):
+            if i == 0:
+                merged_text.append(chunk)  # keep full first chunk
+            else:
+                merged_text.append(chunk.replace(f"Section name: {section}", "").strip())
+
+        merged_sections.append({
+            "doc_id": doc,
+            "section_name": section,
+            "section_link": link,
+            "merged_text": " ".join(merged_text).strip()
+        })
+
+    return pd.DataFrame(merged_sections)
+
+
+merged_df = merge_chunks_for_section(df)
+print(merged_df)
