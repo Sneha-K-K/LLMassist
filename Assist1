@@ -159,3 +159,79 @@ def merge_chunks_for_section(df):
 
 merged_df = merge_chunks_for_section(df)
 print(merged_df)
+import pandas as pd
+import re
+from difflib import SequenceMatcher
+
+# ── 1. Example: load your dataframes ───────────────────────────────
+# Replace these with your actual read statements
+# df1 = pd.read_csv("first_doc.csv")   # columns: doc_id, raw_context, ...
+# df2 = pd.read_csv("second_doc.csv")  # columns: doc_id, raw_context, ...
+
+# ── 2. Helpers ─────────────────────────────────────────────────────
+def normalize(text):
+    """Remove special characters, lowercase, squeeze spaces."""
+    text = re.sub(r'[^a-zA-Z0-9\s]', ' ', str(text))
+    text = re.sub(r'\s+', ' ', text)
+    return text.lower().strip()
+
+def strip_first_two_words(text):
+    """Remove the first two words before normalization."""
+    words = str(text).split()
+    return ' '.join(words[2:]) if len(words) > 2 else ''
+
+# ── 3. Pre-process ─────────────────────────────────────────────────
+df1['norm_context'] = df1['raw_context'].apply(normalize)
+df2['norm_context'] = df2['raw_context'].apply(lambda x: normalize(strip_first_two_words(x)))
+
+# ── 4. Group df1 by document id for faster lookups ─────────────────
+df1_grouped = df1.groupby('doc_id')
+
+# ── 5. Match and record results ────────────────────────────────────
+matches = []
+for idx2, row2 in df2.iterrows():
+    doc_id = row2['doc_id']
+    context2 = row2['norm_context']
+    candidates = df1_grouped.get_group(doc_id) if doc_id in df1_grouped.groups else pd.DataFrame()
+    full_match = None
+    partial_match = None
+    best_ratio = 0.0
+
+    for _, row1 in candidates.iterrows():
+        context1 = row1['norm_context']
+        # Check full containment of df2 chunk inside df1 chunk
+        if context2 and context2 in context1:
+            full_match = row1['raw_context']
+            break
+        # Otherwise compute similarity for potential split overlap
+        ratio = SequenceMatcher(None, context2, context1).ratio()
+        if ratio > best_ratio:
+            best_ratio = ratio
+            partial_match = row1['raw_context']
+
+    matches.append({
+        'df2_index'     : idx2,
+        'doc_id'        : doc_id,
+        'raw_context_1' : full_match if full_match else partial_match,
+        'full_match'    : bool(full_match),
+        'overlap_ratio' : best_ratio
+    })
+
+# ── 6. Merge results back into df2 ─────────────────────────────────
+match_df = pd.DataFrame(matches).set_index('df2_index')
+merged = df2.join(match_df, how='left')
+
+# Flag possible splits
+merged['note'] = merged.apply(
+    lambda r: 'split/partial' if not r['full_match'] and pd.notna(r['raw_context_1']) else '',
+    axis=1
+)
+
+# Optionally replace raw_context when a full match exists
+merged['raw_context'] = merged.apply(
+    lambda r: r['raw_context_1'] if r['full_match'] and pd.notna(r['raw_context_1']) else r['raw_context'],
+    axis=1
+)
+
+# merged is the final dataframe
+print(merged.head())
