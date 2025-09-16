@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+weimport matplotlib.pyplot as plt
 
 # Example counts (replace with your actuals)
 total_docs = 3119
@@ -235,3 +235,24 @@ merged['raw_context'] = merged.apply(
 
 # merged is the final dataframe
 print(merged.head())
+
+
+
+
+
+
+import re
+
+def strip_doc_sec(text, doc, sec):
+    """
+    Remove the leading 'doc, sec,' from the raw_context string.
+    Matches case-insensitively and ignores extra spaces.
+    """
+    # Build a regex that tolerates spaces and optional commas
+    pattern = rf'^\s*{re.escape(str(doc))}\s*,\s*{re.escape(str(sec))}\s*,\s*'
+    return re.sub(pattern, '', str(text), flags=re.IGNORECASE).strip()
+
+df['raw_context'] = df.apply(
+    lambda r: strip_doc_sec(r['raw_context'], r['doc_name'], r['sec_name']),
+    axis=1
+)
