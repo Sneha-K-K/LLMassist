@@ -256,3 +256,10 @@ df['raw_context'] = df.apply(
     lambda r: strip_doc_sec(r['raw_context'], r['doc_name'], r['sec_name']),
     axis=1
 )
+
+import re
+
+df['col1'] = df.apply(
+    lambda r: re.sub(rf'^{re.escape(str(r["col4"]))}\s*', '', str(r["col1"])),
+    axis=1
+)
